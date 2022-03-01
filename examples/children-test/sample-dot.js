@@ -1,28 +1,29 @@
+
 var widget = new WidgetDot({
 	id: '#output',
 	templateId: '#template',
 	functions: {
+		switchCurrentUrl: function() {
+			this.isCurrentUrl = !this.isCurrentUrl;
+		},
 	},
 	data: {
-
-		switchCurrentUrl: function() {
-			this.isCurrentUrl = (this.isCurrentUrl + 1) % 2;
-		},
-		name: 'test',
+		name: 'Widget 1',
 		url: 'https://www.youtube.com/embed/8xTdf55WtTA',
 		isCurrentUrl: 0
 
 	},
-	children: [ 
-		{
-			id: '#output2',
-			templateId: '#templatechild',
-			data: { 
-				url: 'https://www.youtube.com/embed/8xTdf55WtTA',
-			}
-		},
-	],
+});
 
+var widget2 = new WidgetDot({
+	id: '#output2',
+	templateId: '#templatechild',
+	data: { 
+		name: 'Widget 2',
+		url: 'https://www.youtube.com/embed/vLfu09Cl61k',
+	},
+	parent: '#output',
+	
 });
 
 

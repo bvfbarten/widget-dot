@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<link rel="stylesheet" href="../css/pico.css">
+	</head>
+	<body>
+		<script id="counter-template" type="text/html">
+			<div>
+				<button onclick="{%= self %}.data(1).count += 1">Increment</button>
+				<span>{%= self.data().count %}</span>
+			</div>
+		</script>
+		<div id="counter" data-widget-template-id="#counter-template" data-widget-data="{ count: 0 }"></div>
+		<div id="counter2" data-widget-template-id="#counter-template" data-widget-data="{ count: 5 }"></div>
+		<script src="../../dist/widget-dot.js"></script>
+	</body>
+</html>

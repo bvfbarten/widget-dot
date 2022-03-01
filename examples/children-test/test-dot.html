@@ -10,19 +10,25 @@
 	<div id="output"><div><h1>Loading</h1></div></div>
 	<template id="template">
 	    <div>
-		<h1>loaded by {%= self.name %}</h1>
 		<input type="checkbox"
 			value="{%= self.isCurrentUrl %}"
-			onchange="{%= self %}.data(1).switchCurrentUrl();"
-		>
+			onchange="{%= self %}.data(1).switchCurrentUrl();" 
+			 {% self.isCurrentUrl { %}
+			checked> 
+		{% }  else { %}
+			>
+			{% } %}
+
 		{% if ( self.isCurrentUrl ) { %}
+
+			<h1>loaded by {%= self.name %}</h1>
 			<iframe width="560" height="315" src="{%= self.url %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		{% } %}
 
 		<input type="text" 
-		    value="{%= self.name %}" 
-		    onchange="{%= self %}.data(1).name = this.value"
-		    onkeyup="{%= self %}.data(1).name = this.value">
+		    value="{%= self.url %}" 
+		    onchange="{%= self %}.data(1).url = this.value"
+		    onkeyup="{%= self %}.data(1).url = this.value">
 	    </div>
 	</template>
 	<div id="output2"><div><h1>Loading 2</h1></div></div>
@@ -30,6 +36,7 @@
 		<div>
 			<div>
 				{% if ( !self.parent.data().isCurrentUrl ) { %}
+				<h1>loaded by {%= self.name %}</h1>
 				<iframe width="560" height="315" src="{%= self.url %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				{% } %}
 				<button onclick="{%= self %}.data().parent.data(1).name += '!'" >Add ! in {%= self.parent.data().name %}</button>

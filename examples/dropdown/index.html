@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<link rel="stylesheet" href="../css/pico.css">
+	</head>
+	<body>
+		<script id="toggle-template" type="text/html">
+			<div>
+				<button onclick="{%= self %}.data(1).open = !{%= self %}.data().open">
+					toggle
+				</button>
+					<div
+						{% if ( !self.data().open ) { %}
+							 style="display:none"
+						{% } %}
+					> 
+						Contents 
+					</div>
+			</div>
+		</script>
+		<div id="toggle" data-widget-template-id="#toggle-template" data-widget-data="{ open: false }"></div>
+		<script src="../../dist/widget-dot.js"></script>
+	</body>
+</html>
