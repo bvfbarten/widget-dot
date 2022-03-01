@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>html table</title>
+		<link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+	</head>
+	<body>
+		<div id="output">Loading, big file alert</div>
+		<script type="text/html" id="table-template">
+			<div>
+			<style>
+table.dynamic .sorted {
+    font-weight:900;
+}
+table.dynamic .sorted.asc {
+    color:#600;
+}
+table.dynamic .sorted.desc {
+    color:#006;
+}
+			</style>
+			{% var rows = self.rows(); %}
+			<div class="grid">
+			    <div>
+			    Rows: {%= self.displayedRowsCount %},
+			    Current: {%= (self.pageSize * self.pageOffset) %} - 
+			    {%= (self.pageSize + (self.pageSize * self.pageOffset)) %}
+			    <a onclick="{%= self %}.data(1).pageOffset -= 1" href="#" >Prev</a>
+			    <a onclick="{%= self %}.data(1).pageOffset += 1" href="#" >Next</a>
+			    </div>
+			    <div>
+			<input type="text" 
+			    placeholder="search"
+			    value="{%=self.data().search%}"
+			    onchange="{%= self %}.data(1).updateSearch(this.value)"
+			    onkeyup="{%= self %}.data(1).updateSearch(this.value)"
+			>
+			    </div>
+			</div>
+			<table class="dynamic">
+				<thead>
+					<tr>
+					{% for(var k = 0; k < self.keys.length; k +=1) { %}
+					{% var key = self.keys[k]; %}
+						<th 
+						onclick="{%= self %}.data(1).sortByColumn( '{%= key[0] %}')"
+						class="{%= (self._sortInfo[0] == key[0] ? 'sorted ' + self._sortInfo[1] : '') %}"
+						>{%= self.keys[k][1] %}</th>
+					{% } %}
+					</tr>
+				</thead>
+				<tbody>
+					{% for (var i = 0; i < rows.length;  i += 1) {  %}
+						{% var row = rows[i]; %}
+			  			<tr>
+						  {% for ( var c = 0; c < self.data().keys.length; c += 1) {  %}
+			  				{%  var key = self.data().keys[c][0]; %}
+			  				<td>{%= row[key] %}</td>
+						  {% } %}
+			  			</tr>
+			  		{% } %}
+				</tbody>
+			</table>
+			<div>   
+
+			{% if (!self.allRows.length) { %}
+			    Loading big data 
+			{% } %}
+			</div>
+			</div>
+		</script>
+
+		<script src="../../dist/widget-dot.js"></script>
+		<script src="table-1.js"></script>
+		<script src="zip_code.js"></script>
+	</body>
+</html>

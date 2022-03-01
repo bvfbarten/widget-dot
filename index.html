@@ -1,0 +1,61 @@
+<html>
+    <head>
+	<title>test</title>
+	<link rel="stylesheet" href="css/pico.css">
+    </head>
+    <body>
+	<div class="container">
+	    <h1>
+		Tests!
+	    </h1>
+	    <section>
+		<div id="output"></div>
+	    </section>
+	    <template id="template">
+		<div>
+		    <h2>Test 1</h2>
+		    <input type="text"
+			   onkeyup="widget.data(1).verb = this.value"
+			   onfocus="this.style.border='1px solid red'"
+			   placeholder="enter verb" value="{%= verb %}">
+		    <input type="text" 
+			   onkeyup="widget.updateName(this.value);"
+			   onfocus="this.style.border='1px solid blue'"
+			   placeholder="enter name" value="{%= name %}">
+		    <div>
+			{%= verb %} {%= name %}
+		    </div>
+		</div>
+	    </template>
+
+	    <section>
+		<div id="jobs-output"  data-data='{ "todos": ["test", "awesome stuff"] } '></div>
+	    </section>
+
+	    <template id="jobs-template" >
+		<div>
+		    <h2>Test 2</h2>
+		    {% todos.forEach(function(todo, i) { %}
+		    <article onclick="jobs.data(1).todos.splice({%= i %}, 1)">{%= todo %}</article>
+		    {% }) %}
+		    <form onsubmit="jobs.data(1).todos.push(document.querySelector('#new-job').value);return false">
+			<input type="text" placeholder="Enter Job" id="new-job">
+			<input type="submit" value="New Job">
+		    </form>
+		</div>
+	    </template>
+
+	    <div id="progress-bar-output"></div>
+	    <template id="progress-bar-template">
+		<div>
+		{%= value %}, {%= maxValue %}
+		<h3>Test 3</h3>
+		<progress value="{%= value %}" max="{%= maxValue %}"></progress>
+		</div>
+	    </template>
+	</div>
+	<script src="dist/widget.min.js"></script>
+	<script src="test.js"></script>
+    </body>
+
+</html>
