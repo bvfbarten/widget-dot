@@ -8,21 +8,20 @@
     <body>
 
 	<div id="output"><div><h1>Loading</h1></div></div>
-	<template id="template">
+	<script type="text/html" id="template">
 	    <div>
+
 		<input type="checkbox"
 			value="{%= self.isCurrentUrl %}"
 			onchange="{%= self %}.data(1).switchCurrentUrl();" 
-			 {% self.isCurrentUrl { %}
-			checked> 
-		{% }  else { %}
-			>
+			 {% if (self.isCurrentUrl) { %}
+			checked
 			{% } %}
+			>
 
 		{% if ( self.isCurrentUrl ) { %}
-
 			<h1>loaded by {%= self.name %}</h1>
-			<iframe width="560" height="315" src="{%= self.url %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			<iframe width="560" height="315" src="{%= self.url %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		{% } %}
 
 		<input type="text" 
@@ -30,14 +29,14 @@
 		    onchange="{%= self %}.data(1).url = this.value"
 		    onkeyup="{%= self %}.data(1).url = this.value">
 	    </div>
-	</template>
+	</script>
 	<div id="output2"><div><h1>Loading 2</h1></div></div>
-	<template id="templatechild">
+	<script type="text/html" id="templatechild">
 		<div>
 			<div>
 				{% if ( !self.parent.data().isCurrentUrl ) { %}
 				<h1>loaded by {%= self.name %}</h1>
-				<iframe width="560" height="315" src="{%= self.url %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				<iframe width="560" height="315" src="{%= self.url %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				{% } %}
 				<button onclick="{%= self %}.data().parent.data(1).name += '!'" >Add ! in {%= self.parent.data().name %}</button>
 			</div>
@@ -48,7 +47,7 @@
 				       onkeyup="{%= self %}.data(1).url = this.value">
 			</div>
 		</div>
-	</template>
+	</script>
 	<script src="../../dist/widget-dot.js"></script>
 	<script src="sample-dot.js"></script>
     </body>
