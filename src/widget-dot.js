@@ -1,4 +1,4 @@
-var doT = require('./dist/doT');
+var doT = require('../dist/doT');
 var Widget = require('./widget.js').Widget;
 window.WidgetList = require('./widget.js').WidgetList;
 window.widgetAuto = require('./widget.js').widgetAuto;
