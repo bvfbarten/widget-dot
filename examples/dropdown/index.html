@@ -7,16 +7,20 @@
 	<body>
 		<script id="toggle-template" type="text/html">
 			<div>
-				<button onclick="{%= self %}.data(1).open = !{%= self %}.data().open">
-					toggle
-				</button>
-					<div
-						{% if ( !self.data().open ) { %}
-							 style="display:none"
-						{% } %}
-					> 
-						Contents 
-					</div>
+				<div class="container">
+				<div class="grid">
+				    <button onclick="{%= self %}.open = !{%= self %}.open">
+				    	toggle
+				    </button>
+				    	<div
+				    		{% if ( !self.open ) { %}
+				    			 style="display:none"
+				    		{% } %}
+				    	> 
+				    		Contents 
+				    	</div>
+				</div>
+				</div>
 			</div>
 		</script>
 		<div id="toggle" data-widget-template-id="#toggle-template" data-widget-data="{ open: false }"></div>

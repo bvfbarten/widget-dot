@@ -7,8 +7,12 @@
 	<body>
 		<script id="counter-template" type="text/html">
 			<div>
-				<button onclick="{%= self %}.data(1).count += 1">Increment</button>
-				<span>{%= self.data().count %}</span>
+				<div class="container">
+				    <div class="grid">
+				        <button onclick="{%= self %}.count += 1">Increment</button>
+				        <span>{%= self.data().count %}</span>
+				    </div>
+				</div>
 			</div>
 		</script>
 		<div id="counter" data-widget-template-id="#counter-template" data-widget-data="{ count: 0 }"></div>

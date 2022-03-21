@@ -37,7 +37,9 @@ table.dynamic .sorted.desc {
 			>
 			    </div>
 			</div>
-			<table class="dynamic">
+			<div class="container">
+<figure>
+<table class="dynamic">
 				<thead>
 					<tr>
 					{% for(var k = 0; k < self.keys.length; k +=1) { %}
@@ -60,7 +62,8 @@ table.dynamic .sorted.desc {
 			  			</tr>
 			  		{% } %}
 				</tbody>
-			</table>
+			</table></figure>
+</div>
 			<div>   
 
 			{% if (!self.allRows.length) { %}

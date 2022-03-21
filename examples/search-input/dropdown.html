@@ -16,12 +16,14 @@
 		    }' data-widget-data='{"search":"", "items": ["test", "foo", "bar", "baz"]}'></div>
 		<script id="dropdown-template" type="text/html" >
 		    <div>
-			<input type="text" value="{%= self.data().search %}" onkeyup="{%= self %}.data(1).search = this.value">
-			<ul>
-			{%  for (var i in self.data().filteredItems()) { %}
-			    <li> {%= self.data().filteredItems()[i] %}</li>
-			{%  } %}
-			</ul>
+			<div class="container">
+			    <input type="text" value="{%= self.data().search %}" onkeyup="{%= self %}.data(1).search = this.value">
+			    <ul>
+			    {%  for (var i in self.data().filteredItems()) { %}
+			        <li> {%= self.data().filteredItems()[i] %}</li>
+			    {%  } %}
+			    </ul>
+			</div>
 		    </div>
 		</script>
 	    </section>

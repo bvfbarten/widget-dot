@@ -5,7 +5,19 @@
 	<link rel="stylesheet" href="../css/pico.css">
     </head>
     <body>
-	<script id="state-template" type="text/html" >
+	<script id="state-template" type="text/html" 
+	    	    data-widget-functions="{
+	    	      getStates: function(){
+	    		  var rtn = {};
+	    		for(var i =0; i < this.zipCodes.length; i +=1) {
+	    		    rtn[this.zipCodes[i].state] = 1;
+	    		}
+	    		rtn = Object.keys(rtn);
+	    		rtn.sort();
+	    		return rtn;
+	    	      }
+	    	      }"
+	    >
 	    <div>
 		<select onchange="{%= self %}.data(1).selected = this.value">
 		{% if ( self.zipCodes.length ) { %}
@@ -25,21 +37,29 @@
 		</select>
 	    </div>
 	</script>
-	<div id="state-output" 
-		 data-widget-template-id="#state-template" 
-		  data-widget-data="{selected:'', zipCodes:[]}"  
-		    data-widget-functions="{
-		      getStates: function(){
-			  var rtn = {};
-			for(var i =0; i < this.zipCodes.length; i +=1) {
-			    rtn[this.zipCodes[i].state] = 1;
+	<script type="text/html" id="zipcode-template"
+	        data-widget-functions="{getZips:function(){
+	    		var rtn = {};
+	    		for(var i =0; i < this.parent.zipCodes.length; i +=1) {
+	    		    if (this.parent.zipCodes[i].state == this.parent.selected) {
+	    			rtn[this.parent.zipCodes[i].zip_code] = 1;
+	    		    }
+	    		}
+	    		rtn = Object.keys(rtn);
+			var reset = true;
+	    		for(var i =0; i < rtn.length; i +=1) {
+			     if (this.selected == rtn[i]) {
+				 reset = false;
+				 break;
+			     }
 			}
-			rtn = Object.keys(rtn);
-			rtn.sort();
-			return rtn;
-		      }
-		      }"  ><select></select></div>
-	<script type="text/html" id="zipcode-template">
+			if (reset) {
+			    this.data(1).selected = true;
+			}
+	    		rtn.sort();
+	    		return rtn;
+	        }}"
+	    >
 	    <div>
 		Selected is: {%= self.parent.selected %}
 		<select onchange="{%= self %}.data(1).selected = this.value">
@@ -56,40 +76,62 @@
 		</select>
 	    </div>
 	</script>
-	<div id="zipcode-output" 
-	    data-widget-template-id="#zipcode-template"
-	    data-widget-data="{selected:''}"
-	    data-widget-functions="{getZips:function(){
-			var rtn = {};
-			for(var i =0; i < this.parent.zipCodes.length; i +=1) {
-			    if (this.parent.zipCodes[i].state == this.parent.selected) {
-				rtn[this.parent.zipCodes[i].zip_code] = 1;
-			    }
-			}
-			rtn = Object.keys(rtn);
-			rtn.sort();
-			return rtn;
-	    }}"
-	    data-widget-parent="#state-output"
-	>did not load</div>
-	<script type="text/html" id="city-template">
+	<script type="text/html" id="city-template"
+		 data-widget-functions="{
+	    	 getCity: function() {
+	    	    var rtn = null;
+	    	    for(var i = 0; i < this.parent.parent.zipCodes.length; i += 1) {
+	    		var line = this.parent.parent.zipCodes[i];
+	    		if (line.zip_code == this.parent.selected) {
+	    		    rtn = line;
+	    		}
+	    	    }
+	    	    return rtn;
+	    	 }
+	        }" 
+	    >
 	    <div>
-		Your city is {%=self.getCity()%}
+		{% var line = self.getCity(); %}
+		{% if (line) { %}
+		<ul>
+		    <li>
+		    Your city is {%=line.city%}
+		    </li>
+		    <li>
+		    Your zipcode's latitude {%=line.lat%}
+		    </li>
+		    <li>
+		    Your zipcode's longitude {%=line.long%}
+		    </li>
+		    {% if (line.estimated_population) { %}
+		    <li>
+		    The people in this zipcode is: {%=line.estimated_population%}
+		    </li>
+		    {% } %}
+		    {% if (line.total_wages) { %}
+		    <li>
+		    The total wage for this zipcode is: {%=line.total_wages%}
+		    </li>
+		    {% } %}
+		</ul>
+		{% } else { %}
+		<div>No Zipcode listed yet</div>
+		{% } %}
 	    </div>
 	</script>
-	<div id="city-output" data-widget-template-id="#city-template" data-widget-functions="{
-		 getCity: function() {
-		    var rtn = ' not found';
-		    for(var i = 0; i < this.parent.parent.zipCodes.length; i += 1) {
-			var line = this.parent.parent.zipCodes[i];
-			if (line.zip_code == this.parent.selected) {
-			    rtn = line.city;
-			}
-		    }
-
-		    return rtn;
-		 }
-	    }" data-widget-parent="#zipcode-output"></div>
+	<div class="container">
+	    <div id="state-output" 
+	    	 data-widget-template-id="#state-template" 
+	    	  data-widget-data="{selected:'', zipCodes:[]}"  
+		      ><select></select></div>
+	    <div id="zipcode-output" 
+	        data-widget-template-id="#zipcode-template"
+	        data-widget-data="{selected:''}"
+	        data-widget-parent-id="#state-output"
+	    >did not load</div>
+	    <div id="city-output" data-widget-template-id="#city-template" 
+		data-widget-parent-id="#zipcode-output"></div>
+	</div>
 	<script src="../../dist/widget-dot.js"></script>
 	<script src="../js/zip_code.js"></script>
     </body>

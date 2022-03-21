@@ -34,6 +34,7 @@
 	<script type="text/html" id="templatechild">
 		<div>
 			<div>
+			{% console.log(self.parent.data); %}
 				{% if ( !self.parent.data().isCurrentUrl ) { %}
 				<h1>loaded by {%= self.name %}</h1>
 				<iframe width="560" height="315" src="{%= self.url %}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; gyroscope; picture-in-picture" allowfullscreen></iframe>

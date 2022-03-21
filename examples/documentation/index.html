@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Dot Widget Documentation</title>
+		<link rel="stylesheet" href="../css/pico.css">
+		<style>
+input, 
+select, 
+textarea,
+input:focus, 
+select:focus, 
+textarea:focus
+{
+--form-element-background-color : navy;
+--form-element-color: white;
+--form-element-active-background-color: navy;
+font-size:.75rem;
+		</style>
+	</head>
+	<body>
+		<script>
+(function(window){
+	window.htmlentities = {
+		/**
+		 * Converts a string to its html characters completely.
+		 *
+		 * @param {String} str String with unescaped HTML characters
+		 **/
+		encode : function(str) {
+			var buf = [];
+			
+			for (var i=str.length-1;i>=0;i--) {
+				buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
+			}
+			
+			return buf.join('');
+		},
+		/**
+		 * Converts an html characterSet into its original character.
+		 *
+		 * @param {String} str htmlSet entities
+		 **/
+		decode : function(str) {
+			return str.replace(/&#(\d+);/g, function(match, dec) {
+				return String.fromCharCode(dec);
+			});
+		}
+	};
+})(window);
+		</script>
+		<script id="show-html" type="text/html" data-widget-functions="{ __init: function() { 
+			self.str = self.$el.querySelector('textarea').value; 
+			}}">
+			<div>
+				<pre>
+					{%= htmlentities.encode(self.str) %} 
+				</pre>
+			</div>
+		</script>
+		<script id="themepicker-template" type="text/html"
+		     data-widget-functions='{
+				__init: function(){
+					self.updateColor(sessionStorage.getItem("themepicker-template.color"));
+				},
+				updateColor: function(color) {
+					if (color) {
+						self.color = color;
+						} else {
+						self.color = this.color == "light" ? "dark" : "light";
+					    }
+					document.querySelector("html").dataset["theme"] =  self.color;
+					sessionStorage.setItem("themepicker-template.color", self.color);
+				}
+			}'
+			>
+		<div>
+			<button onclick="{%= self %}.updateColor()" class="themepicker">{%= self.color %}</button>
+		</div>
+		</script>
+		<div id="themepicker-widget"
+		     data-widget-data='{
+		     	color:null
+		     }'
+		     data-widget-template-id="#themepicker-template"
+			>
+		</div>
+		<div class="container">
+			<h1>Basic Documentation About Dot Widget</h1>
+		</div>
+		<div class="container">
+			<h2>Overview</h2>
+			<article>
+				<details>
+					<summary><h3>What is Dot Widget?</h3></summary>
+					<p>Dot Widget is a simple client side tool to use for basic html manipulations.  In places where code organization would be nice and placing it directly next to the html would be nicer.</p>
+				</details>
+				<details>
+					<summary><h3>What is Dot Widget comprised of?</h3></summary>
+					<p>Dot Widget is a lightweight widget shell over dot.js and a morphing library.  Currently morphdom is being used. This allows older browsers, aka IE11 to process the updates</p>
+				</details>
+				<details>
+					<summary><h3>How does it work?</h3></summary>
+					<p>
+					 Dot Widget works by managing variables in the template widget.  When the variables are modified, this triggers dot.js to run a render function that is then morphed into the destination  tag. <br>
+					</p>
+				</details>
+			</article>
+		</div>
+		<div class="container">
+			
+			<h2>Initialization</h2>
+					<h3>There are two ways to initialize Dot Widget</h3>
+					<p>
+					<ul>
+					    <li>
+						HTML Initialization (default)
+						<br>
+						<ul>
+						    <li>
+							Uses Html to initialize the class
+						    </li>
+						    <li>Uses data attributes in either the template or the root tag to fill out what is required for widget initialization</li>
+						    <li>Faster for Simpler widgets</li>
+						    <li>This is the most likely use case for Dot Widget</li>
+						</ul>
+						<div id="simple-example-1" data-widget-template-id="#show-html">
+<textarea  readonly style="height:10rem">
+<script type="text/html" id="simple-example-template">
+    <div>
+	Hello {%=self.name%}
+    </div>
+</script> 
+<div id="simple-example-root"
+    data-widget-template-id="#simple-example-template"
+    data-widget-data="{name: 'widget'}"
+></div>
+						</textarea>
+					        </div>
+					    </li>
+					    <li>
+						Javascript Initialization (Advanced)
+						<br>
+						<ul>
+						    <li>
+							Uses javascript to initialize the class
+						    </li>
+						    <li>Still requires a template</li>
+						    <li>More complicated</li>
+						    <li>Easier to read for widgets that require a lot of functions</li>
+						</ul>
+
+						<div id="simple-example-2" data-widget-template-id="#show-html">
+						<textarea readonly >
+<script type="text/html" id="simple-example-template">
+    <div>
+	Hello {%=self.name%}
+    </div>
+</script> 
+<div id="simple-example-root"></div>
+<script>
+var widget = new WidgetDot({
+    id: '#simple-example-root',
+    templateId : '#simple-example-template',
+    data: {name: 'widget'}
+});
+</script>
+						</textarea>
+						</div>
+					    </li>
+					</ul>
+					</p>
+		</div>
+		<div class="container">
+		    <article>
+		        <h2>Basic Initialization</h2>
+			<ul>
+			    <li>
+				<h3>ID</h3>
+				<strong>REQUIRED</strong>
+				<p>
+				    Both the root and the widget require an id
+				</p>
+			    </li>
+			    <li>
+				<h3>data-widget-template-id</h3>
+				<strong>REQUIRED</strong>
+				<p>
+				    Required on the Root to find the template
+				    Use css notation to find the template aka use a pound sign
+				</p>
+			    </li>
+			    <li>
+				<h3>data-widget-data</h3>
+				<strong>REQUIRED</strong>
+				<p>
+				    Required in the root. May be either JSON, or a regular js object.
+				    <code>
+					data-widget-data='{"fn":"function(a){return a;}"}'
+				    </code>
+				</p>
+			    </li>
+			    <li>
+				<h3>data-widget-functions</h3>
+				<strong>OPTIONAL</strong>
+				<p>
+				    May be placed in either the root or the template. May be either JSON, or a regular js object.
+				    example of json:
+				    <br>
+				    <code>
+					data-widget-functions='{"fn":"function(a){return a;}"}'
+				    </code>
+				    <br>
+				    example of js object
+				    <br>
+				    <code>
+					data-widget-functions='{fn:function(a){return a;}}'
+				    </code>
+				    <h4>
+				    	__init is a special function name that will get ran as soon as the widget is initialized
+				    </h4>
+				</p>
+			    </li>
+			    <li>
+				<h3>data-widget-parent-id</h3>
+				<strong>OPTIONAL</strong>
+				<p>
+				    Attaches a widget to the parent so it may access the parent's data object.
+				    <br>
+				    <a href="../parent-select/index.html">Example</a>
+				</p>
+			    </li>
+			</ul>
+		    </article>
+		</div>
+		<div class="container">
+		    <h2>Advanced Initialization</h2>
+		    <details>
+			<summary>
+			    <h3>id</h3>
+			    <p>
+				
+			    </p>
+			</summary>
+		    </details>
+		</div>
+		<script src="../../dist/widget-dot.js"></script>
+	</body>
+
+</html>

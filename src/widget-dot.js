@@ -31,7 +31,7 @@ window.WidgetDot = function(args) {
 	doT.templateSettings = args.dotOptions;
 	this.compiled = doT.template(this.template);
 	}
-	args.renderString = function(data) {
+	args.renderHtml = function(data) {
 		var rtn = this.compiled(data);
 		return rtn;
 	}
