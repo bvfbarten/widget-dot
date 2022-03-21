@@ -9,8 +9,8 @@
 	    	    data-widget-functions="{
 	    	      getStates: function(){
 	    		  var rtn = {};
-	    		for(var i =0; i < this.zipCodes.length; i +=1) {
-	    		    rtn[this.zipCodes[i].state] = 1;
+	    		for(var i =0; i < self.zipCodes.length; i +=1) {
+	    		    rtn[self.zipCodes[i].state] = 1;
 	    		}
 	    		rtn = Object.keys(rtn);
 	    		rtn.sort();
@@ -19,13 +19,13 @@
 	    	      }"
 	    >
 	    <div>
-		<select onchange="{%= self %}.data(1).selected = this.value">
+		<select onchange="{%= self %}.selected = this.value">
 		{% if ( self.zipCodes.length ) { %}
 		    <option value="">
 			select State
 		    </option>
 		{% self.getStates().forEach(function(state, index) { %}
-		    <option {%=(state == self.data().selected ? 'selected' : '') %}>
+		    <option {%=(state == self.selected ? 'selected' : '') %}>
 		       {%= state %} 
 		    </option>
 		{% }) %}
@@ -40,21 +40,22 @@
 	<script type="text/html" id="zipcode-template"
 	        data-widget-functions="{getZips:function(){
 	    		var rtn = {};
-	    		for(var i =0; i < this.parent.zipCodes.length; i +=1) {
-	    		    if (this.parent.zipCodes[i].state == this.parent.selected) {
-	    			rtn[this.parent.zipCodes[i].zip_code] = 1;
+	    		for(var i =0; i < self.parent.zipCodes.length; i +=1) {
+	    		    if (self.parent.zipCodes[i].state == self.parent.selected) {
+	    			rtn[self.parent.zipCodes[i].zip_code] = 1;
 	    		    }
 	    		}
 	    		rtn = Object.keys(rtn);
 			var reset = true;
 	    		for(var i =0; i < rtn.length; i +=1) {
-			     if (this.selected == rtn[i]) {
+			     if (self.selected == rtn[i]) {
 				 reset = false;
 				 break;
 			     }
 			}
 			if (reset) {
-			    this.data(1).selected = true;
+			    // calling data(1) because this function is being used for data collection, but we need to update the ui
+			    self.data(1).selected = true;
 			}
 	    		rtn.sort();
 	    		return rtn;
@@ -62,7 +63,7 @@
 	    >
 	    <div>
 		Selected is: {%= self.parent.selected %}
-		<select onchange="{%= self %}.data(1).selected = this.value">
+		<select onchange="{%= self %}.selected = this.value">
 		{% if (self.parent.selected) { %}
 		    <option value="">
 			select Zip
@@ -80,9 +81,9 @@
 		 data-widget-functions="{
 	    	 getCity: function() {
 	    	    var rtn = null;
-	    	    for(var i = 0; i < this.parent.parent.zipCodes.length; i += 1) {
-	    		var line = this.parent.parent.zipCodes[i];
-	    		if (line.zip_code == this.parent.selected) {
+	    	    for(var i = 0; i < self.parent.parent.zipCodes.length; i += 1) {
+	    		var line = self.parent.parent.zipCodes[i];
+	    		if (line.zip_code == self.parent.selected) {
 	    		    rtn = line;
 	    		}
 	    	    }
@@ -123,7 +124,10 @@
 	    <div id="state-output" 
 	    	 data-widget-template-id="#state-template" 
 	    	  data-widget-data="{selected:'', zipCodes:[]}"  
-		      ><select></select></div>
+		      >
+
+
+	    </div>
 	    <div id="zipcode-output" 
 	        data-widget-template-id="#zipcode-template"
 	        data-widget-data="{selected:''}"

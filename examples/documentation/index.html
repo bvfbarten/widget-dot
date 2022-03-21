@@ -191,12 +191,15 @@ var widget = new WidgetDot({
 			    </li>
 			    <li>
 				<h3>data-widget-data</h3>
-				<strong>REQUIRED</strong>
+				<strong>RECOMMENDED</strong>
 				<p>
-				    Required in the root. May be either JSON, or a regular js object.
+				    Recommended, and needs to be in the root. May be either JSON, or a regular js object.
+				    Only not required if the __init function initializes variables to be used
 				    <code>
 					data-widget-data='{"fn":"function(a){return a;}"}'
 				    </code>
+				    <br><br>
+				    If data-widget-data is set after initialization, it will update widget.data with data supplied.  It will override any variables that are set.
 				</p>
 			    </li>
 			    <li>
@@ -231,6 +234,68 @@ var widget = new WidgetDot({
 			    </li>
 			</ul>
 		    </article>
+		</div>
+		<div class="container">
+			<h2>Template</h2>
+			<details>
+				<summary>The template is rendered by dot.js with a major modification, rather than {{ }}, it uses {% %} to prevent interference with server side rendering of mustache style packages.  The Template always needs to be enclodes inside a div</summary>
+			</details>
+		</div>
+		<div class="container">
+		    <h2>Gotchas</h2>
+		    <details>
+			<summary>
+			    <h3>Compilation vs Display States</h3>
+			    <p>
+			    Widget Dot has two states, the render state, and the display state.  During the render state, code is dynamically being created.  This is when the template is being processed.  After the content has been morphed into the root, it will be in a display state. At this point, the content is static until an event is triggered that will re-render the widget.  The widget has two ways of hooking into it's data. One is for render, the other is for display. <br>
+
+			    <ul>
+				<li>
+					<h4>Attributes</h4>
+					<ul>
+						<li>
+							During render {%= self.attribute %} will return the value of the attribute in question.
+						</li>
+						<li>
+							During display {%=self }}.attribute = 2, will modify the attribute and cause the widget to re-render.
+						</li>
+					</ul>
+				</li>
+				<li>
+					<h4>Methods</h4>
+					<ul>
+						<li>
+							<h5>Render</h5>
+							<ul>
+								<li>
+									During render {%= self.method() %} will return the value of the method in question.
+								</li>
+								<li>
+									Any function call is assumed to be for display purposes, if updating data is required, then inside the function, rather than calling self.attribute = 2, you will need to call inform the widget that it is to be updated. self.data(1).attribute
+									<a href="../parent-select/index.html" target="_other">Example</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h5>Display</h5>
+							<ul>
+								<li>
+									During display {%=self }}.method(), will automatically cause the widget to re-render.
+								</li>
+								<li>
+									the __init function is a render state function
+								</li>
+								<li>
+									If inside the display method, an async function is called that will update the state at a later time, self.data(1).attribute = 2. will be required to update.
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			    </ul>
+			    </p>
+			</summary>
+		    </details>
 		</div>
 		<div class="container">
 		    <h2>Advanced Initialization</h2>

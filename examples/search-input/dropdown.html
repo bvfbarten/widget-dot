@@ -17,18 +17,25 @@
 		<script id="dropdown-template" type="text/html" >
 		    <div>
 			<div class="container">
-			    <input type="text" value="{%= self.data().search %}" onkeyup="{%= self %}.data(1).search = this.value">
+			    <input type="text" value="{%= self.search %}" onkeyup="{%= self %}.search = this.value">
 			    <ul>
-			    {%  for (var i in self.data().filteredItems()) { %}
-			        <li> {%= self.data().filteredItems()[i] %}</li>
+			    {%  for (var i in self.filteredItems()) { %}
+			        <li> {%= self.filteredItems()[i] %}</li>
 			    {%  } %}
 			    </ul>
 			</div>
 		    </div>
 		</script>
+		<script>
+			function update() {
+				console.log('updating');
+				console.log(document.querySelector('#dropdown-output'));
+				document.querySelector('#dropdown-output').dataset['widgetData'] = '{"items": ["bob", "boo", "Dylan"]}';
+				console.log('updated');
+			}
+		</script>
+		<button onclick="update();">Change List</button>
 	    </section>
-
-
 	</div>
 	<script src="../../dist/widget-dot.js" auto></script>
     </body>

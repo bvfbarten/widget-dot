@@ -210,3 +210,4 @@ exports.widgetAuto = function (type) {
 		exports.WidgetList[key].extractData();
 	}
 }
+window.setInterval(exports.widgetAuto, 25);
