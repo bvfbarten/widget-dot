@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Todo</title>
+		<link rel="stylesheet" href="../css/pico.css">
+	</head>
+	<body><div class="container">
+			<h1>Simple Todo</h1>
+		<script type="text/html" id="list-template"><div>
+			<ul>
+				{% for(var i = 0; i < self.list.length; i += 1) { %}
+					<li 
+					style="{%= self.list[i][1] ? 'text-decoration:line-through' : '' %}"
+					onclick="{%=self %}.list[{%= i %}][1] = !({%=self %}.list[{%= i %}][1])"> 
+						{%= self.list[i][0] %}
+					</li>
+				{% } %}
+			</ul>
+		</div></script>
+		<script type="text/html" id="input-template"><div>
+			<form onsubmit="{%= self %}.parent(1).data(1).list.push([querySelector('#new_line').value, 0]);return false;">
+				<input placeholder="Insert Todo Here" type="text" id="new_line">
+			</form>
+		</div></script>
+		<div id="list-root" data-widget-template-id="#list-template" data-widget-data='{ list: [ ]}'></div>
+		<div id="input-root" data-widget-template-id="#input-template" data-widget-parent-id="#list-root" data-widget-data='{}'></div>
+		<script src="../../dist/widget-dot.js" auto></script>
+	</div></body>
+
+</html>
+

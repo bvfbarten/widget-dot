@@ -38,11 +38,12 @@
 	    </div>
 	</script>
 	<script type="text/html" id="zipcode-template"
-	        data-widget-functions="{getZips:function(){
+	        data-widget-functions="{
+				       getZips:function(){
 	    		var rtn = {};
-	    		for(var i =0; i < self.parent.zipCodes.length; i +=1) {
-	    		    if (self.parent.zipCodes[i].state == self.parent.selected) {
-	    			rtn[self.parent.zipCodes[i].zip_code] = 1;
+	    		for(var i =0; i < self.parent().zipCodes.length; i +=1) {
+	    		    if (self.parent().zipCodes[i].state == self.parent().selected) {
+	    			rtn[self.parent().zipCodes[i].zip_code] = 1;
 	    		    }
 	    		}
 	    		rtn = Object.keys(rtn);
@@ -62,9 +63,9 @@
 	        }}"
 	    >
 	    <div>
-		Selected is: {%= self.parent.selected %}
+		Selected is: {%= self.parent().selected %}
 		<select onchange="{%= self %}.selected = this.value">
-		{% if (self.parent.selected) { %}
+		{% if (self.parent().selected) { %}
 		    <option value="">
 			select Zip
 		    </option>
@@ -81,9 +82,9 @@
 		 data-widget-functions="{
 	    	 getCity: function() {
 	    	    var rtn = null;
-	    	    for(var i = 0; i < self.parent.parent.zipCodes.length; i += 1) {
-	    		var line = self.parent.parent.zipCodes[i];
-	    		if (line.zip_code == self.parent.selected) {
+	    	    for(var i = 0; i < self.parent().parent().zipCodes.length; i += 1) {
+	    		var line = self.parent().parent().zipCodes[i];
+	    		if (line.zip_code == self.parent().selected) {
 	    		    rtn = line;
 	    		}
 	    	    }

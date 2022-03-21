@@ -32,12 +32,11 @@ exports.Widget = function (args) {
 		if (self.parent && !(rtn.parent)) {
 			Object.defineProperty(rtn, 'parent', {
 				get: function() {
-					return WidgetList[self.parent].data()
+					return WidgetList[self.parent].data
 				}
 			});
 		}
 		if (typeof(fn) == 'function') {
-			console.log(self.$el);
 			rtn._fn = fn;
 			rtn._fn();
 			self.setNeedsRender();
@@ -178,7 +177,6 @@ exports.Widget = function (args) {
 	}
 	
 	if (self.functions && typeof(self.functions.__init) == 'function') {
-		console.log(self.$el);
 		self.data(self.data().__init);
 	}
 	return self;

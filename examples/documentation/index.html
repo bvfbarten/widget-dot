@@ -191,10 +191,9 @@ var widget = new WidgetDot({
 			    </li>
 			    <li>
 				<h3>data-widget-data</h3>
-				<strong>RECOMMENDED</strong>
+				<strong>REQUIRED</strong>
 				<p>
-				    Recommended, and needs to be in the root. May be either JSON, or a regular js object.
-				    Only not required if the __init function initializes variables to be used
+				    Required, and needs to be in the root. May be either JSON, or a regular js object.
 				    <code>
 					data-widget-data='{"fn":"function(a){return a;}"}'
 				    </code>
@@ -229,7 +228,11 @@ var widget = new WidgetDot({
 				<p>
 				    Attaches a widget to the parent so it may access the parent's data object.
 				    <br>
-				    <a href="../parent-select/index.html">Example</a>
+				    The parent is accessed through the parent function.<br>
+				    {%= self.parent().attribute %} will display the parent attribute.
+				    {% self.parent(1).attribute = 1 %} set's parent attribute to 1.
+				    <a href="../parent-select/index.html">Parent Select zipcode</a>
+				    <a href="../todo-with-parent/index.html">Todo Parent List Child input</a>
 				</p>
 			    </li>
 			</ul>
