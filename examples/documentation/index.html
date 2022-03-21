@@ -242,16 +242,15 @@ var widget = new WidgetDot({
 			</details>
 		</div>
 		<div class="container">
-		    <h2>Gotchas</h2>
+		    <h2>Compilation vs Display States</h2>
 		    <details>
 			<summary>
-			    <h3>Compilation vs Display States</h3>
 			    <p>
 			    Widget Dot has two states, the render state, and the display state.  During the render state, code is dynamically being created.  This is when the template is being processed.  After the content has been morphed into the root, it will be in a display state. At this point, the content is static until an event is triggered that will re-render the widget.  The widget has two ways of hooking into it's data. One is for render, the other is for display. <br>
 
 			    <ul>
 				<li>
-					<h4>Attributes</h4>
+					<h3>Attributes</h3>
 					<ul>
 						<li>
 							During render {%= self.attribute %} will return the value of the attribute in question.
@@ -262,10 +261,10 @@ var widget = new WidgetDot({
 					</ul>
 				</li>
 				<li>
-					<h4>Methods</h4>
+					<h3>Methods</h3>
 					<ul>
 						<li>
-							<h5>Render</h5>
+							<h4>Render</h4>
 							<ul>
 								<li>
 									During render {%= self.method() %} will return the value of the method in question.
@@ -277,7 +276,7 @@ var widget = new WidgetDot({
 							</ul>
 						</li>
 						<li>
-							<h5>Display</h5>
+							<h4>Display</h4>
 							<ul>
 								<li>
 									During display {%=self }}.method(), will automatically cause the widget to re-render.
