@@ -18,7 +18,7 @@
 			</ul>
 		</div></script>
 		<script type="text/html" id="input-template"><div>
-			<form onsubmit="{%= self %}.parent(1).data(1).list.push([querySelector('#new_line').value, 0]);return false;">
+			<form onsubmit="{%= self %}.parent(1).list.push([querySelector('#new_line').value, 0]);return false;">
 				<input placeholder="Insert Todo Here" type="text" id="new_line">
 			</form>
 		</div></script>

@@ -124,7 +124,7 @@ font-size:.75rem;
 						    <li>This is the most likely use case for Dot Widget</li>
 						</ul>
 						<div id="simple-example-1" data-widget-template-id="#show-html">
-<textarea  readonly style="height:10rem">
+<textarea  readonly>
 <script type="text/html" id="simple-example-template">
     <div>
 	Hello {%=self.name%}
@@ -259,7 +259,7 @@ var widget = new WidgetDot({
 							During render {%= self.attribute %} will return the value of the attribute in question.
 						</li>
 						<li>
-							During display {%=self }}.attribute = 2, will modify the attribute and cause the widget to re-render.
+							During display {%=self %}.attribute = 2, will modify the attribute and cause the widget to re-render.
 						</li>
 					</ul>
 				</li>
