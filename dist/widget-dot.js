@@ -1079,15 +1079,13 @@ exports.Widget = function (args) {
 					for(var key in datas){
 						this[key] = datas[key];
 					}
-					if (self.parent) {
-						this.parent = item.data().parent;
-					}
 				};
 				Data.prototype.toString = function() { return "WidgetList['" + args.id + "'].data(1)" };
 				var data = new Data(self);
 				var str = self.renderHtml(data);
 				if (str) {
-					morphdom(self.$el, str, {childrenOnly: true});
+				    str = "<div>" + str + "</div>";
+					morphdom(self.$el,  str , {childrenOnly: true});
 				}
 			}
 		}, 0);

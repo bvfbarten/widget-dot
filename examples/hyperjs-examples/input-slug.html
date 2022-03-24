@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+    // The hyperjs version of this example uses the slugify node package
+    //this is by no means an indepth slugify function, but a close enough aproximation for comparison
+    function slugify(str) {
+	var rtn = str.replaceAll(/\W/g, '-');
+	return rtn.toLowerCase();
+    }
+</script>
+</head>
+<body>
+<div class="mb-20">
+    These examples are taking examples from hyperjs to allow a direct comparision between widget-dot and alpine-js
+    <br>
+    This example is taken from:
+    <script type="text/html" id="href-template">
+	<div>
+	    <a class="hover:text-blue-600 underline" href="{%=self.url %}">{%=self.url %}</a>
+	</div>
+    </script>
+    <div id="href-root" data-widget-template-id="#href-template" data-widget-data="{ url: 'https://www.hyperjs.dev/examples/input-slug' } "></div>
+</div>
+<br>
+<script type="text/html" id="input-slug-template">
+<div>
+<div class="flex gap-4">
+  <input
+    value="{%= self.inputTitle %}"
+    onkeyup="{%= self %}.inputTitle = this.value"
+    onchange="{%= self %}.inputQuantity = this.value"
+    class="w-full p-3 border-2 border-black rounded-lg"
+    aria-label="Title"
+    type="text"
+  />
+
+  <input
+    value="{%=slugify(self.inputTitle) %}" 
+    class="w-full p-3 border-2 border-black rounded-lg"
+    aria-label="Slug"
+    type="text"
+  />
+</div>
+</div>
+</script>
+<div id="input-slug-root" data-widget-template-id="#input-slug-template" data-widget-data="{ inputTitle: 'Hello World' }"></div>
+  <script src="../../dist/widget-dot.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<div class="mb-20">
+    These examples are taking examples from hyperjs to allow a direct comparision between widget-dot and alpine-js
+    <br>
+    This example is taken from:
+    <script type="text/html" id="href-template">
+	<div>
+	    <a class="hover:text-blue-600 underline" href="{%=self.url %}">{%=self.url %}</a>
+	</div>
+    </script>
+
+    <div id="href-root" data-widget-template-id="#href-template" data-widget-data="{ url: 'https://www.hyperjs.dev/examples/input-positive-number' } "></div>
+</div>
+<br>
+<script type="text/html" id="input-slug-template">
+<div>
+<div class="flex gap-4">
+  <input
+    value="{%= self.inputQuantity %}"
+    onkeyup="{%= self %}.inputQuantity = this.value"
+    onchange="{%= self %}.inputQuantity = this.value"
+    class="w-full p-3 border-2 border-black rounded-lg"
+    aria-label="Quantity"
+    type="number"
+  />
+
+  <input
+    value="{%= Math.abs(self.inputQuantity) %}" 
+    class="w-full p-3 border-2 border-black rounded-lg"
+    aria-label="Slug"
+    type="number"
+  />
+</div>
+</div>
+</script>
+<div id="input-slug-root" data-widget-template-id="#input-slug-template" data-widget-data="{ inputQuantity: 1 }"></div>
+  <script src="../../dist/widget-dot.js"></script>
+</body>
+</html>
+
+
+

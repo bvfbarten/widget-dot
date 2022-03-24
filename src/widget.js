@@ -134,7 +134,8 @@ exports.Widget = function (args) {
 				var data = new Data(self);
 				var str = self.renderHtml(data);
 				if (str) {
-					morphdom(self.$el, str, {childrenOnly: true});
+				    str = "<div>" + str + "</div>";
+					morphdom(self.$el,  str , {childrenOnly: true});
 				}
 			}
 		}, 0);

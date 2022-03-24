@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+    // The hyperjs version of this example uses the slugify node package
+    //this is by no means an indepth slugify function, but a close enough aproximation for comparison
+    function slugify(str) {
+	var rtn = str.replaceAll(/\W/g, '-');
+	return rtn.toLowerCase();
+    }
+</script>
+</head>
+<body>
+<div class="mb-20">
+    These examples are taking examples from hyperjs to allow a direct comparision between widget-dot and alpine-js
+    <br>
+    This example is taken from:
+    <script type="text/html" id="href-template">
+	<div>
+	    <a class="hover:text-blue-600 underline" href="{%=self.url %}">{%=self.url %}</a>
+	</div>
+    </script>
+    <div id="href-root" data-widget-template-id="#href-template" data-widget-data="{ url: 'https://www.hyperjs.dev/examples/tabs' } "></div>
+</div>
+<br>
+<script type="text/html" id="widget-template"
+			 data-widget-functions="{ '__init': function() { activeTab = window.location.hash ? window.location.hash.replace('#', '') : 'productDetails' } }" 
+			 >
+<div
+>
+  <nav>
+    <ul class="flex space-x-4">
+      <li>
+        <a
+	    onclick="{%= self %}.activeTab = 'productDetails'"
+	  class="p-3 text-white bg-black rounded-lg {%= self.activeTab === 'productDetails' ? 'font-bold' : '' %}"
+          href="#productDetails"
+        >
+          Product Details
+        </a>
+      </li>
+
+      <li>
+        <a
+	    onclick="{%= self %}.activeTab = 'productSpecs'"
+	  class="p-3 text-white bg-black rounded-lg {%= self.activeTab === 'productSpecs' ? 'font-bold' : '' %}"
+          href="#productSpecs"
+        >
+          Product Specs
+        </a>
+      </li>
+
+      <li>
+        <a
+	    onclick="{%= self %}.activeTab = 'productReviews'"
+	  class="p-3 text-white bg-black rounded-lg {%= self.activeTab === 'productReviews' ? 'font-bold' : '' %}"
+          href="#productReviews"
+        >
+          Product Reviews
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="p-6 mt-4 text-white bg-black rounded-lg ">
+    <div class="{%= self.activeTab !== 'productDetails' ? 'hidden' : ''%}">
+      <h2>Product Details</h2>
+    </div>
+
+    <div class="{%= self.activeTab !== 'productSpecs' ? 'hidden' : ''%}">
+      <h2>Product Specs</h2>
+    </div>
+
+    <div class="{%= self.activeTab !== 'productReviews' ? 'hidden' : ''%}">
+      <h2>Product Reviews</h2>
+    </div>
+  </div>
+</div>
+</script>
+<div id="widget-root" data-widget-template-id="#widget-template" data-widget-data="{ activeTab: 'productDetails' }"></div>
+  <script src="../../dist/widget-dot.js"></script>
+</body>
+</html>
+
