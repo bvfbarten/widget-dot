@@ -28,7 +28,11 @@
   </button>
 </script>
 <div id="modal-root" data-widget-template-id="#modal-template" data-widget-data="{ showModal: false }"></div>
-<script type="text/html" id="modal-template" >
+<script type="text/html" id="modal-template" data-widget-functions="{ '__init' : function(){ 
+    window.onkeydown = function(e) {
+	if (e.code == 'Escape') { self.showModal = false; } 
+	}
+    }}">
 <div >
 {% if (self.showModal) { %}
     <div
@@ -38,12 +42,14 @@
 
     <div
       class="fixed inset-0 z-50 flex items-center justify-center"
+      onkeypress="console.log(event);"
+      onclick="{%= self %}.showModal = false;"
     >
       <div
-	onclick="console.log('test');"
+      onclick="event.stopPropagation()"
         class="w-screen max-w-xl p-8 mx-auto overflow-scroll bg-white rounded-lg h-96"
       >
-        <p>
+        <p >
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus
           accusantium amet cumque laudantium fugit! Asperiores voluptatum
           inventore architecto eius! Molestias voluptate praesentium beatae
