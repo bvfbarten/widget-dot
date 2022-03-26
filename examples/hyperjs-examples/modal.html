@@ -30,9 +30,9 @@
 <div id="modal-root" data-widget-template-id="#modal-template" data-widget-data="{ showModal: false }"></div>
 <script type="text/html" id="modal-template" >
 <div >
-{% console.log('showModal:', self.showModal); %}
 {% if (self.showModal) { %}
     <div
+      onclick="{%=self%}.showModal = false"
       class="fixed inset-0 bg-black/25"
     ></div>
 
@@ -40,6 +40,7 @@
       class="fixed inset-0 z-50 flex items-center justify-center"
     >
       <div
+	onclick="console.log('test');"
         class="w-screen max-w-xl p-8 mx-auto overflow-scroll bg-white rounded-lg h-96"
       >
         <p>
